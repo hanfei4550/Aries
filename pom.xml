@@ -1,0 +1,122 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.hunanbang</groupId>
+	<artifactId>Aries</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Aries</name>
+	<description>Aries new project</description>
+
+	<!-- 模块定义 -->
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>Aries-pojo</module>
+				<module>Aries-core</module>
+				<module>Aries-util</module>
+				<module>Aries-provider</module>
+				<module>Aries-consumer</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>deploy</id>
+			<modules>
+				<module>Aries-pojo</module>
+				<module>Aries-core</module>
+				<module>Aries-util</module>
+				<module>Aries-provider</module>
+				<module>Aries-consumer</module>
+			</modules>
+		</profile>
+	</profiles>
+
+	<!-- 属性定义，（模块版本管理） -->
+	<properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <Aries.core.version>1.0.0-SNAPSHOT</Aries.core.version>
+		<Aries.pojo.version>1.0.0-SNAPSHOT</Aries.pojo.version>
+		<Aries.util.version>1.0.0-SNAPSHOT</Aries.util.version>
+		<Aries.provider.version>1.0.0-SNAPSHOT</Aries.provider.version>
+		<Aries.consumer.version>1.0.0-SNAPSHOT</Aries.consumer.version>
+	</properties>
+
+	<!-- 依赖管理，所有引用的jar在这里定义 -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- 工程模块依赖 -->
+			<dependency>
+				<groupId>com.hunanbang</groupId>
+				<artifactId>Aries-core</artifactId>
+				<version>${Aries.core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.hunanbang</groupId>
+				<artifactId>Aries-pojo</artifactId>
+				<version>${Aries.pojo.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.hunanbang</groupId>
+				<artifactId>Aries-util</artifactId>
+				<version>${Aries.util.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.hunanbang</groupId>
+				<artifactId>Aries-provider</artifactId>
+				<version>${Aries.provider.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.hunanbang</groupId>
+				<artifactId>Aries-consumer</artifactId>
+				<version>${Aries.consumer.version}</version>
+			</dependency>
+			
+			<!--第三方依赖管理-->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo</artifactId>
+				<version>2.4.9-update2</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+		<!-- 预定义的插件管理 -->
+		<pluginManagement>
+			<plugins>
+				<!-- jetty -->
+				<plugin>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>7.2.0.RC0</version>
+					<configuration>
+						<webAppConfig>
+							<contextPath>/</contextPath>
+						</webAppConfig>
+						<scanIntervalSeconds>5</scanIntervalSeconds>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				
+				<!-- JUnit插件-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<skipTests>true</skipTests>
+						<testFailureIgnore>true</testFailureIgnore>
+					</configuration>
+				</plugin>				
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
